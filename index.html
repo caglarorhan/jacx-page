@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>JACX — Privacy-First Job Application Control & Autofill</title>
-  <meta name="description" content="JACX (Job Application Control eXtension) is a 100% local-first, privacy-preserving Chrome extension for smart ATS autofill, adaptive question learning, and continuous application tracking." />
+  <meta name="description" content="JACX (Job Application Control eXtension) is a 100% local-first, privacy-preserving Chrome extension for smart ATS autofill, adaptive question learning, smart application safeguards, and continuous application tracking." />
   <link rel="icon" type="image/png" sizes="32x32" href="icons/icon32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="icons/icon16.png" />
   <link rel="apple-touch-icon" sizes="128x128" href="icons/icon128.png" />
@@ -16,6 +16,16 @@
       --primary-light: #10b981;
       --primary-bg: #ecfdf5;
       --primary-border: #a7f3d0;
+      --indigo: #4f46e5;
+      --indigo-dark: #4338ca;
+      --indigo-bg: #eef2ff;
+      --indigo-border: #c7d2fe;
+      --amber: #d97706;
+      --amber-bg: #fffbeb;
+      --amber-border: #fde68a;
+      --purple: #7c3aed;
+      --purple-bg: #f5f3ff;
+      --purple-border: #ddd6fe;
       --slate-50: #f8fafc;
       --slate-100: #f1f5f9;
       --slate-200: #e2e8f0;
@@ -91,11 +101,11 @@
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 28px;
+      gap: 24px;
       list-style: none;
     }
     .nav-link {
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 600;
       color: var(--slate-600);
       text-decoration: none;
@@ -139,7 +149,7 @@
 
     /* Hero Section */
     .hero {
-      padding: 80px 0 60px 0;
+      padding: 76px 0 50px 0;
       text-align: center;
       position: relative;
       overflow: hidden;
@@ -160,12 +170,12 @@
       margin-bottom: 24px;
     }
     .hero-title {
-      font-size: 52px;
+      font-size: 50px;
       font-weight: 900;
       color: var(--slate-900);
       letter-spacing: -0.03em;
       line-height: 1.15;
-      max-width: 900px;
+      max-width: 940px;
       margin: 0 auto 20px auto;
     }
     .hero-title span {
@@ -177,20 +187,21 @@
       font-size: 18px;
       line-height: 1.6;
       color: var(--slate-600);
-      max-width: 760px;
-      margin: 0 auto 36px auto;
+      max-width: 780px;
+      margin: 0 auto 34px auto;
     }
     .hero-actions {
       display: flex;
       justify-content: center;
       gap: 16px;
-      margin-bottom: 36px;
+      margin-bottom: 34px;
+      flex-wrap: wrap;
     }
     .hero-trust {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 24px;
+      gap: 22px;
       font-size: 13px;
       font-weight: 600;
       color: var(--slate-600);
@@ -204,29 +215,108 @@
       color: var(--primary);
     }
 
-    /* Hero Image Preview */
-    .hero-preview {
-      margin-top: 50px;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid var(--slate-200);
-      box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.15);
+    /* Interactive Screenshot Showcase */
+    .showcase-wrapper {
+      margin-top: 46px;
       background: #ffffff;
+      border-radius: 20px;
+      border: 1px solid var(--slate-200);
+      box-shadow: 0 20px 50px -10px rgba(15, 23, 42, 0.12);
+      overflow: hidden;
+      text-align: left;
     }
-    .hero-preview img {
+    .showcase-header {
+      background: var(--slate-100);
+      border-bottom: 1px solid var(--slate-200);
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .window-dots {
+      display: flex;
+      gap: 7px;
+    }
+    .window-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+    }
+    .dot-red { background: #ef4444; }
+    .dot-yellow { background: #f59e0b; }
+    .dot-green { background: #10b981; }
+
+    .showcase-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .showcase-tab {
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      border-radius: 8px;
+      padding: 7px 14px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--slate-600);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+    .showcase-tab:hover {
+      background: var(--slate-50);
+      color: var(--slate-900);
+      border-color: var(--slate-300);
+    }
+    .showcase-tab.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary-dark);
+      box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3);
+    }
+    .showcase-screen {
+      position: relative;
+      background: #0f172a;
+      overflow: hidden;
+    }
+    .showcase-screen img {
       width: 100%;
       height: auto;
       display: block;
+      transition: opacity 0.25s ease-in-out;
+    }
+    .showcase-footer {
+      padding: 14px 22px;
+      background: #ffffff;
+      border-top: 1px solid var(--slate-200);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: var(--slate-600);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .showcase-caption {
+      font-weight: 600;
+      color: var(--slate-800);
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    /* Section Headers */
+    /* Section Common Styles */
     .section {
-      padding: 90px 0;
+      padding: 85px 0;
     }
     .section-header {
       text-align: center;
-      max-width: 720px;
-      margin: 0 auto 54px auto;
+      max-width: 740px;
+      margin: 0 auto 50px auto;
     }
     .section-tag {
       font-size: 12px;
@@ -261,7 +351,7 @@
       background: #ffffff;
       border: 1px solid var(--slate-200);
       border-radius: 16px;
-      padding: 32px 28px;
+      padding: 30px 26px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
       transition: all 0.2s ease;
       display: flex;
@@ -276,6 +366,10 @@
       border-color: var(--primary-border);
       background: linear-gradient(180deg, #ffffff 0%, var(--primary-bg) 100%);
     }
+    .feature-card.highlight-purple {
+      border-color: var(--purple-border);
+      background: linear-gradient(180deg, #ffffff 0%, var(--purple-bg) 100%);
+    }
     .feature-icon {
       width: 48px;
       height: 48px;
@@ -287,10 +381,15 @@
       align-items: center;
       justify-content: center;
       font-size: 24px;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
+    }
+    .feature-icon.purple {
+      background: var(--purple-bg);
+      border-color: var(--purple-border);
+      color: var(--purple);
     }
     .feature-title {
-      font-size: 19px;
+      font-size: 18.5px;
       font-weight: 800;
       color: var(--slate-900);
       margin-bottom: 10px;
@@ -303,12 +402,12 @@
       flex: 1;
     }
     .feature-bullets {
-      margin-top: 18px;
+      margin-top: 16px;
       padding-top: 14px;
       border-top: 1px solid var(--slate-100);
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 7px;
     }
     .feature-bullet {
       font-size: 12.5px;
@@ -323,6 +422,267 @@
       height: 6px;
       border-radius: 50%;
       background: var(--primary);
+    }
+    .bullet-dot.purple {
+      background: var(--purple);
+    }
+
+    /* Smart Safeguards Section */
+    .safeguards-section {
+      background: #ffffff;
+      border-top: 1px solid var(--slate-200);
+      border-bottom: 1px solid var(--slate-200);
+    }
+    .safeguards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 36px;
+    }
+    .safeguard-card {
+      border: 1px solid var(--slate-200);
+      border-radius: 16px;
+      padding: 26px 22px;
+      background: var(--slate-50);
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .safeguard-card:hover {
+      background: #ffffff;
+      border-color: var(--indigo-border);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(79, 70, 229, 0.08);
+    }
+    .safeguard-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .safeguard-icon-box {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+    }
+    .safeguard-badge {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 3px 8px;
+      border-radius: 6px;
+      margin-left: auto;
+    }
+    .badge-defense {
+      background: var(--indigo-bg);
+      color: var(--indigo-dark);
+      border: 1px solid var(--indigo-border);
+    }
+    .badge-tone {
+      background: var(--amber-bg);
+      color: var(--amber);
+      border: 1px solid var(--amber-border);
+    }
+    .badge-truth {
+      background: var(--primary-bg);
+      color: var(--primary-dark);
+      border: 1px solid var(--primary-border);
+    }
+    .safeguard-name {
+      font-size: 16.5px;
+      font-weight: 800;
+      color: var(--slate-900);
+      margin-bottom: 8px;
+    }
+    .safeguard-desc {
+      font-size: 13.5px;
+      color: var(--slate-600);
+      line-height: 1.55;
+      flex: 1;
+    }
+    .safeguard-code {
+      font-size: 11.5px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      padding: 6px 10px;
+      border-radius: 6px;
+      color: var(--slate-700);
+      margin-top: 14px;
+    }
+    .safeguard-master-box {
+      margin-top: 36px;
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      color: #ffffff;
+      border-radius: 16px;
+      padding: 24px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    /* Local AI Section (3 Tiers) */
+    .ai-tiers-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 36px;
+    }
+    .tier-card {
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      border-radius: 16px;
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+      transition: all 0.2s ease;
+    }
+    .tier-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+    }
+    .tier-card.active-default {
+      border: 2px solid var(--primary);
+    }
+    .tier-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      margin-bottom: 16px;
+      width: fit-content;
+    }
+    .pill-tier1 {
+      background: var(--primary-bg);
+      color: var(--primary-dark);
+      border: 1px solid var(--primary-border);
+    }
+    .pill-tier2 {
+      background: var(--indigo-bg);
+      color: var(--indigo-dark);
+      border: 1px solid var(--indigo-border);
+    }
+    .pill-tier3 {
+      background: var(--purple-bg);
+      color: var(--purple);
+      border: 1px solid var(--purple-border);
+    }
+    .tier-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--slate-900);
+      margin-bottom: 8px;
+    }
+    .tier-subtitle {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--slate-500);
+      margin-bottom: 14px;
+    }
+    .tier-text {
+      font-size: 13.5px;
+      color: var(--slate-600);
+      line-height: 1.6;
+      flex: 1;
+    }
+    .tier-specs {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid var(--slate-100);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 12.5px;
+    }
+    .tier-spec-item {
+      display: flex;
+      justify-content: space-between;
+      color: var(--slate-600);
+    }
+    .tier-spec-item strong {
+      color: var(--slate-800);
+    }
+
+    /* Promo Showcase Banner */
+    .promo-banner {
+      margin-top: 50px;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--slate-200);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      background: #ffffff;
+    }
+    .promo-banner img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Onboarding Wizard Section */
+    .wizard-section {
+      background: #ffffff;
+      border-top: 1px solid var(--slate-200);
+      border-bottom: 1px solid var(--slate-200);
+    }
+    .wizard-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-top: 36px;
+    }
+    .wizard-card {
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-radius: 14px;
+      padding: 24px 20px;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+    .wizard-card:hover {
+      background: #ffffff;
+      border-color: var(--primary-border);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+    }
+    .wizard-step-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    .wizard-step-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--slate-900);
+      margin-bottom: 8px;
+    }
+    .wizard-step-text {
+      font-size: 13px;
+      color: var(--slate-600);
+      line-height: 1.5;
     }
 
     /* Comparison Table */
@@ -366,48 +726,9 @@
       color: var(--primary-dark);
     }
 
-    /* Workflow Steps */
-    .steps-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 32px;
-    }
-    .step-card {
-      background: #ffffff;
-      border: 1px solid var(--slate-200);
-      border-radius: 16px;
-      padding: 32px 24px;
-      position: relative;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-    }
-    .step-number {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: var(--primary);
-      color: #ffffff;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      margin-bottom: 20px;
-    }
-    .step-title {
-      font-size: 18px;
-      font-weight: 800;
-      color: var(--slate-900);
-      margin-bottom: 10px;
-    }
-    .step-desc {
-      font-size: 14px;
-      color: var(--slate-600);
-      line-height: 1.6;
-    }
-
     /* FAQ Accordion */
     .faq-grid {
-      max-width: 800px;
+      max-width: 820px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
@@ -441,6 +762,7 @@
       font-size: 18px;
       transition: transform 0.2s ease;
       color: var(--slate-400);
+      font-weight: bold;
     }
     .faq-answer {
       display: none;
@@ -477,7 +799,7 @@
     .cta-desc {
       font-size: 17px;
       color: var(--slate-300);
-      max-width: 640px;
+      max-width: 660px;
       margin: 0 auto 32px auto;
       line-height: 1.6;
     }
@@ -525,14 +847,22 @@
       justify-content: space-between;
       align-items: center;
       font-size: 12.5px;
+      flex-wrap: wrap;
+      gap: 12px;
     }
 
     /* Responsive */
-    @media (max-width: 900px) {
+    @media (max-width: 960px) {
       .hero-title { font-size: 38px; }
-      .features-grid, .steps-grid, .protocol-grid { grid-template-columns: 1fr !important; }
+      .features-grid, .safeguards-grid, .ai-tiers-grid { grid-template-columns: 1fr !important; }
+      .wizard-grid { grid-template-columns: 1fr 1fr !important; }
+      .protocol-grid { grid-template-columns: 1fr !important; }
       .footer-grid { grid-template-columns: 1fr; gap: 32px; }
       .nav-links { display: none; }
+    }
+    @media (max-width: 640px) {
+      .wizard-grid { grid-template-columns: 1fr !important; }
+      .hero-title { font-size: 32px; }
     }
   </style>
 </head>
@@ -551,11 +881,12 @@
 
       <ul class="nav-links">
         <li><a href="#features" class="nav-link">Features</a></li>
-        <li><a href="#protocol" class="nav-link">APP Protocol</a></li>
-        <li><a href="#security" class="nav-link">Privacy & Security</a></li>
-        <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
+        <li><a href="#safeguards" class="nav-link">Smart Safeguards</a></li>
+        <li><a href="#local-ai" class="nav-link">Local AI</a></li>
+        <li><a href="#wizard" class="nav-link">Easy Start</a></li>
+        <li><a href="#protocol" class="nav-link">APP v1.0.4</a></li>
+        <li><a href="#security" class="nav-link">Privacy</a></li>
         <li><a href="#faq" class="nav-link">FAQ</a></li>
-        <li><a href="privacy.html" class="nav-link">Privacy Policy</a></li>
       </ul>
 
       <div>
@@ -579,32 +910,67 @@
       </h1>
 
       <p class="hero-desc">
-        JACX is the privacy-first Chrome sidepanel assistant for verified ATS form autofill, adaptive question learning, and continuous application tracking. All resumes, credentials, and answers remain 100% on your machine.
+        JACX is the privacy-first Chrome sidepanel assistant for verified ATS form autofill, adaptive question learning, smart application safeguards, and continuous pipeline tracking. All resumes, credentials, and answers remain 100% on your machine.
       </p>
 
       <div class="hero-actions">
         <a href="https://chrome.google.com/webstore" target="_blank" rel="noopener noreferrer" class="cta-btn" style="padding: 14px 28px; font-size: 15px;">
           ⚡ Add to Chrome — It's Free
         </a>
-        <a href="#features" class="cta-btn cta-btn-secondary" style="padding: 14px 24px; font-size: 15px;">
-          Explore All Features ↓
+        <a href="#safeguards" class="cta-btn cta-btn-secondary" style="padding: 14px 24px; font-size: 15px;">
+          Explore Smart Safeguards & AI ↓
         </a>
       </div>
 
       <div class="hero-trust">
         <div class="trust-item"><span class="icon">✓</span> 100% On-Device IndexedDB</div>
         <div class="trust-item"><span class="icon">✓</span> Military-Grade AES-256-GCM Vault</div>
+        <div class="trust-item"><span class="icon">✓</span> Autonomous Smart Application Safeguards</div>
         <div class="trust-item"><span class="icon">✓</span> Human-in-the-Loop Review (Zero Auto-Submits)</div>
-        <div class="trust-item"><span class="icon">✓</span> Zero Telemetry & No Remote Accounts</div>
       </div>
 
-      <div class="hero-preview">
-        <img src="images/screenshot-1-autofill-1280x800.png" alt="JACX Extension Live Screenshot in Chrome" />
+      <!-- Interactive Tabbed Screenshot Showcase -->
+      <div class="showcase-wrapper">
+        <div class="showcase-header">
+          <div class="window-dots">
+            <span class="window-dot dot-red"></span>
+            <span class="window-dot dot-yellow"></span>
+            <span class="window-dot dot-green"></span>
+          </div>
+
+          <div class="showcase-tabs" id="showcase-tabs">
+            <button class="showcase-tab active" data-img="images/screenshot-1-autofill-1280x800.png" data-caption="⚡ High-Precision ATS Autofill: Automatic form detection across Greenhouse, Lever, Workday & custom career portals with field plan review.">
+              <span>⚡</span> ATS Autofill
+            </button>
+            <button class="showcase-tab" data-img="images/screenshot-2-tracker-1280x800.png" data-caption="📊 3-Tier Application Tracker: Real-time pipeline stages (Applied, Interview, Offer, Rejected), multi-round interview manager & calendar sync.">
+              <span>📊</span> Pipeline Tracker
+            </button>
+            <button class="showcase-tab" data-img="images/screenshot-3-privacy-vault-1280x800.png" data-caption="🔒 Private Vault & Question Library: Password-encrypted confidential EEO/salary disclosures and self-learning Q&A fuzzy matching.">
+              <span>🔒</span> Private Vault
+            </button>
+            <button class="showcase-tab" data-img="images/screenshot-4-features-1280x800.png" data-caption="✨ Complete Feature Capabilities: On-device local AI models, smart safeguards defense suite, and 1-click APP v1.0.4 exports.">
+              <span>✨</span> All Capabilities
+            </button>
+          </div>
+        </div>
+
+        <div class="showcase-screen">
+          <img id="showcase-img" src="images/screenshot-1-autofill-1280x800.png" alt="JACX Extension Live Screenshot in Chrome" />
+        </div>
+
+        <div class="showcase-footer">
+          <div class="showcase-caption" id="showcase-caption">
+            <span>⚡</span> High-Precision ATS Autofill: Automatic form detection across Greenhouse, Lever, Workday & custom career portals with field plan review.
+          </div>
+          <div style="font-size: 11.5px; color: var(--slate-400); font-family: monospace;">
+            1280 &times; 800 HD
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Features Grid Section -->
+  <!-- Complete Features Grid -->
   <section id="features" class="section">
     <div class="container">
       <div class="section-header">
@@ -621,12 +987,12 @@
           <div class="feature-icon">⚡</div>
           <h3 class="feature-title">Precision ATS Autofill</h3>
           <p class="feature-text">
-            Autonomous field detection across Greenhouse, Lever, Workday, Ashby, Taleo, Criteria Corp, and custom corporate career portals.
+            Autonomous field detection across Greenhouse, Lever, Workday, Ashby, Taleo, Criteria Corp, SmartRecruiters, and custom corporate portals.
           </p>
           <div class="feature-bullets">
-            <div class="feature-bullet"><span class="bullet-dot"></span>Multi-frame ATS support</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>Multi-frame ATS support with iframe resilience</div>
             <div class="feature-bullet"><span class="bullet-dot"></span>Preview planned fields before execution</div>
-            <div class="feature-bullet"><span class="bullet-dot"></span>Never auto-submits without review</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>Strict Human-in-the-Loop (Zero blind auto-submits)</div>
           </div>
         </div>
 
@@ -635,17 +1001,31 @@
           <div class="feature-icon">🧠</div>
           <h3 class="feature-title">Adaptive Question Learning</h3>
           <p class="feature-text">
-            Tired of answering "How many years of React?" on every portal? JACX automatically learns and stores your verified answers, auto-suggesting them using fuzzy semantic matching.
+            Tired of repeatedly answering "How many years of React?" on every portal? JACX automatically learns and stores your verified answers, auto-suggesting them using fuzzy semantic matching.
           </p>
           <div class="feature-bullets">
-            <div class="feature-bullet"><span class="bullet-dot"></span>Self-learning Question Library</div>
-            <div class="feature-bullet"><span class="bullet-dot"></span>Fuzzy similarity matching across ATSs</div>
-            <div class="feature-bullet"><span class="bullet-dot"></span>Full manual edit and review control</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>Self-learning local Question Library</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>Fuzzy similarity matching across different ATS phrasing</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>Full manual edit, review, and override control</div>
           </div>
         </div>
 
-        <!-- Feature 3: 3-Tier Application Tracker -->
-        <div class="feature-card highlight">
+        <!-- Feature 3: Grounded AI Cover Letters (EMPHASIZED) -->
+        <div class="feature-card highlight-purple">
+          <div class="feature-icon purple">✨</div>
+          <h3 class="feature-title">AI Cover Letters with Evidence Grounding</h3>
+          <p class="feature-text">
+            Synthesize highly tailored, role-specific cover letters in seconds directly in your sidepanel. Every generated claim is strictly grounded in your verified candidate experience and facts.
+          </p>
+          <div class="feature-bullets">
+            <div class="feature-bullet"><span class="bullet-dot purple"></span>Zero AI hallucination — strict profile evidence binding</div>
+            <div class="feature-bullet"><span class="bullet-dot purple"></span>Tone calibration (Startup velocity vs Enterprise governance)</div>
+            <div class="feature-bullet"><span class="bullet-dot purple"></span>Instant client-side PDF document generation & download</div>
+          </div>
+        </div>
+
+        <!-- Feature 4: 3-Tier Application Tracker -->
+        <div class="feature-card">
           <div class="feature-icon">📊</div>
           <h3 class="feature-title">3-Tier Application Tracker</h3>
           <p class="feature-text">
@@ -653,12 +1033,12 @@
           </p>
           <div class="feature-bullets">
             <div class="feature-bullet"><span class="bullet-dot"></span>Pipeline stages: Applied, Interview, Offer, Rejected</div>
-            <div class="feature-bullet"><span class="bullet-dot"></span>Revisitable submitted Q&A history</div>
-            <div class="feature-bullet"><span class="bullet-dot"></span>Recruiter contact records & private notes</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>Revisitable submitted Q&A history per application</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>Recruiter contact records & private interview notes</div>
           </div>
         </div>
 
-        <!-- Feature 4: Multi-Round Interviews -->
+        <!-- Feature 5: Multi-Round Interviews -->
         <div class="feature-card">
           <div class="feature-icon">🗓️</div>
           <h3 class="feature-title">Multi-Round Interview Manager</h3>
@@ -666,27 +1046,27 @@
             Track sequential interview rounds with dates, times, interviewers, and preparation notes. Export directly to Google Calendar, Outlook, or standard .ICS files.
           </p>
           <div class="feature-bullets">
-            <div class="feature-bullet"><span class="bullet-dot"></span>Google & Outlook Calendar sync</div>
-            <div class="feature-bullet"><span class="bullet-dot"></span>Standard .ICS calendar downloads</div>
-            <div class="feature-bullet"><span class="bullet-dot"></span>Next round countdown banner on cards</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>Google & Outlook 1-click Calendar sync</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>Standard .ICS calendar file downloads</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>Next round countdown banner on application cards</div>
           </div>
         </div>
 
-        <!-- Feature 5: Offer Details & Compensation -->
+        <!-- Feature 6: Offer Details & Compensation -->
         <div class="feature-card">
           <div class="feature-icon">💼</div>
           <h3 class="feature-title">Offer & Compensation Tracker</h3>
           <p class="feature-text">
-            Organize job offers with base salary, signing bonus, equity grants, and decision deadlines. Plan negotiation strategies with structured notes.
+            Organize job offers with base salary, signing bonus, equity grants, and decision deadlines. Plan negotiation strategies with structured compensation notes.
           </p>
           <div class="feature-bullets">
-            <div class="feature-bullet"><span class="bullet-dot"></span>Base, bonus & equity tracking</div>
-            <div class="feature-bullet"><span class="bullet-dot"></span>Offer expiration alerts</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>Base, bonus & equity grant breakdown</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>Offer expiration alerts & negotiation log</div>
             <div class="feature-bullet"><span class="bullet-dot"></span>Two-step safe stage downgrade guard</div>
           </div>
         </div>
 
-        <!-- Feature 6: 15-Day Soft-Delete & Trash -->
+        <!-- Feature 7: 15-Day Soft-Delete & Trash -->
         <div class="feature-card">
           <div class="feature-icon">🗑️</div>
           <h3 class="feature-title">15-Day Soft-Delete & Trash</h3>
@@ -694,13 +1074,13 @@
             Accidentally deleted an application? Deleted cards enter a 15-day recovery trash bin. Restore them with one click or let expired entries auto-purge permanently.
           </p>
           <div class="feature-bullets">
-            <div class="feature-bullet"><span class="bullet-dot"></span>Dedicated "Deleted" filter view</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>Dedicated "Deleted" filter tab view</div>
             <div class="feature-bullet"><span class="bullet-dot"></span>Instant one-click RESTORE button</div>
-            <div class="feature-bullet"><span class="bullet-dot"></span>Automatic purge prevents storage leaks</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>Automatic purge prevents storage bloat</div>
           </div>
         </div>
 
-        <!-- Feature 7: AES-256-GCM Private Vault -->
+        <!-- Feature 8: AES-256-GCM Private Vault -->
         <div class="feature-card">
           <div class="feature-icon">🔒</div>
           <h3 class="feature-title">AES-256-GCM Private Vault</h3>
@@ -709,22 +1089,8 @@
           </p>
           <div class="feature-bullets">
             <div class="feature-bullet"><span class="bullet-dot"></span>100,000 PBKDF2 master key iterations</div>
-            <div class="feature-bullet"><span class="bullet-dot"></span>Decrypted in memory only when approved</div>
-            <div class="feature-bullet"><span class="bullet-dot"></span>Zero plaintext on disk</div>
-          </div>
-        </div>
-
-        <!-- Feature 8: Match Fit & Cover Letters -->
-        <div class="feature-card">
-          <div class="feature-icon">🎯</div>
-          <h3 class="feature-title">Match Fit & Cover Letters</h3>
-          <p class="feature-text">
-            Evaluates candidate-to-job keyword alignment directly on your device with clear reasoning. Generate tailored cover letters with instant client-side PDF export.
-          </p>
-          <div class="feature-bullets">
-            <div class="feature-bullet"><span class="bullet-dot"></span>Scientific match percentage scoring</div>
-            <div class="feature-bullet"><span class="bullet-dot"></span>Client-side PDF document generation</div>
-            <div class="feature-bullet"><span class="bullet-dot"></span>Multiple candidate profile personas</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>Decrypted in memory only when explicitly authorized</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>Zero plaintext stored on disk</div>
           </div>
         </div>
 
@@ -736,23 +1102,265 @@
             No remote databases, no tracking cookies, no Google Analytics, and no account registrations. Export or delete your entire database anytime from Settings.
           </p>
           <div class="feature-bullets">
-            <div class="feature-bullet"><span class="bullet-dot"></span>100% on-device browser sandbox</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>100% on-device browser sandbox (IndexedDB)</div>
             <div class="feature-bullet"><span class="bullet-dot"></span>Encrypted .appvault portable workspace backup</div>
-            <div class="feature-bullet"><span class="bullet-dot"></span>Open Applicant Profile Protocol (APP)</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>Standardized on open APP v1.0.4 protocol</div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Applicant Profile Protocol (APP) Standard Section -->
+  <!-- Smart Application Safeguards Section -->
+  <section id="safeguards" class="section safeguards-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Autonomous Candidate Protection</span>
+        <h2 class="section-title">Smart Application Safeguards</h2>
+        <p class="section-desc">
+          Automated ATS screeners and recruiters disqualify thousands of qualified applicants due to subtle framing misalignments. JACX's built-in defense engine actively guards your applications before you submit.
+        </p>
+      </div>
+
+      <div class="safeguards-grid">
+        <!-- Safeguard 1: Overqualified Protector -->
+        <div class="safeguard-card">
+          <div class="safeguard-header">
+            <div class="safeguard-icon-box">🛡️</div>
+            <span class="safeguard-badge badge-defense">Seniority Defense</span>
+          </div>
+          <h3 class="safeguard-name">Role-Level Calibrator (Overqualified Protector)</h3>
+          <p class="safeguard-desc">
+            Applying for an Individual Contributor (IC) or mid-level role? This safeguard automatically downweights executive and director-level framing from your profile search chunks, preventing automatic "overqualification" rejections by recruiters.
+          </p>
+          <div class="safeguard-code">
+            safeguards.overqualifiedProtector = true
+          </div>
+        </div>
+
+        <!-- Safeguard 2: Focused Skill Pruning -->
+        <div class="safeguard-card">
+          <div class="safeguard-header">
+            <div class="safeguard-icon-box">🎯</div>
+            <span class="safeguard-badge badge-defense">Specialist Focus</span>
+          </div>
+          <h3 class="safeguard-name">Focused Skill Pruning (Specialist over Generalist)</h3>
+          <p class="safeguard-desc">
+            Listing 40 technologies makes you look unfocused. This policy automatically prioritizes skills and experiences directly relevant to the specific Job Description (JD), pruning irrelevant legacy tools and highlighting laser-focused competency.
+          </p>
+          <div class="safeguard-code">
+            safeguards.skillPruning = true
+          </div>
+        </div>
+
+        <!-- Safeguard 3: Culture & Tone Alignment -->
+        <div class="safeguard-card">
+          <div class="safeguard-header">
+            <div class="safeguard-icon-box">🎭</div>
+            <span class="safeguard-badge badge-tone">Voice Tuning</span>
+          </div>
+          <h3 class="safeguard-name">Culture & Tone Alignment (Startup vs. Enterprise)</h3>
+          <p class="safeguard-desc">
+            Automatically infers employer archetypes from job postings. Injects high-velocity ownership language for early-stage startups (&ldquo;shipped rapid MVPs, full-lifecycle ownership&rdquo;) or governance and compliance emphasis for enterprise organizations.
+          </p>
+          <div class="safeguard-code">
+            safeguards.toneAlignment = true
+          </div>
+        </div>
+
+        <!-- Safeguard 4: Salary Band Guard -->
+        <div class="safeguard-card">
+          <div class="safeguard-header">
+            <div class="safeguard-icon-box">💵</div>
+            <span class="safeguard-badge badge-defense">Comp Safety</span>
+          </div>
+          <h3 class="safeguard-name">Salary Band Guard (Auto-Anchoring)</h3>
+          <p class="safeguard-desc">
+            Prevents pricing yourself out of consideration or undervaluing your worth. Intelligently anchors suggested compensation proposals strictly to the employer's published salary band or your target threshold.
+          </p>
+          <div class="safeguard-code">
+            safeguards.salaryBandGuard = true
+          </div>
+        </div>
+
+        <!-- Safeguard 5: Evidence Grounding Rule -->
+        <div class="safeguard-card">
+          <div class="safeguard-header">
+            <div class="safeguard-icon-box">🔍</div>
+            <span class="safeguard-badge badge-truth">Anti-Hallucination</span>
+          </div>
+          <h3 class="safeguard-name">Evidence Grounding Rule</h3>
+          <p class="safeguard-desc">
+            Strictly prohibits unverified buzzwords, hyperbolic claims, or fabricated metrics. Every suggestion or cover letter sentence requires direct citation to local candidate profile facts and verified work achievements.
+          </p>
+          <div class="safeguard-code">
+            safeguards.evidenceGrounding = true
+          </div>
+        </div>
+
+        <!-- Safeguard 6: Master User Control -->
+        <div class="safeguard-card">
+          <div class="safeguard-header">
+            <div class="safeguard-icon-box">⚙️</div>
+            <span class="safeguard-badge badge-defense">Full Control</span>
+          </div>
+          <h3 class="safeguard-name">Individual Policy Switches & Master Toggle</h3>
+          <p class="safeguard-desc">
+            You remain in total command. Toggle individual safeguards on or off based on your preferences, or disable the entire suite with one click from the Settings view. Dual-persisted across IndexedDB and local storage.
+          </p>
+          <div class="safeguard-code">
+            smart_safeguards_enabled = true
+          </div>
+        </div>
+      </div>
+
+      <div class="safeguard-master-box">
+        <div>
+          <h4 style="font-size: 18px; font-weight: 800; margin-bottom: 6px;">Configured Directly in JACX Settings</h4>
+          <p style="font-size: 13.5px; color: var(--slate-300); max-width: 650px;">
+            All 5 safeguards operate 100% locally on your machine via our on-device RAG engine. Zero job descriptions or profile details are ever transmitted to third-party cloud servers.
+          </p>
+        </div>
+        <a href="#how-it-works" class="cta-btn" style="background: var(--primary-light); color: var(--slate-900);">
+          See How It Works →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Local AI & Flexible Model Selection -->
+  <section id="local-ai" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Flexible Local AI Tiers</span>
+        <h2 class="section-title">Zero Cloud Exfiltration: 3 Computing Tiers</h2>
+        <p class="section-desc">
+          Choose the exact AI processing tier that matches your hardware and workflow. From zero-download instant heuristics to GPU-accelerated local language models.
+        </p>
+      </div>
+
+      <div class="ai-tiers-grid">
+        <!-- Tier 1: Fast Heuristic Parser -->
+        <div class="tier-card active-default">
+          <span class="tier-pill pill-tier1">✓ Tier 1 • Default (Instant)</span>
+          <h3 class="tier-title">Fast Heuristic Engine</h3>
+          <div class="tier-subtitle">Zero Download • 100% Offline • Instant</div>
+          <p class="tier-text">
+            High-speed rule-based regex and fuzzy semantic heuristics. Out-of-the-box readiness for all users without downloading model weights or requiring hardware acceleration.
+          </p>
+          <div class="tier-specs">
+            <div class="tier-spec-item"><span>Download Size:</span> <strong>0 MB (Instant)</strong></div>
+            <div class="tier-spec-item"><span>Hardware Requirement:</span> <strong>Any PC / Mac / Linux</strong></div>
+            <div class="tier-spec-item"><span>Network Usage:</span> <strong>Zero / 100% Offline</strong></div>
+            <div class="tier-spec-item"><span>Status:</span> <strong style="color: var(--primary);">Active by Default</strong></div>
+          </div>
+        </div>
+
+        <!-- Tier 2: In-Browser WebGPU SLMs -->
+        <div class="tier-card">
+          <span class="tier-pill pill-tier2">Optional • WebGPU Accelerated</span>
+          <h3 class="tier-title">In-Browser WebGPU SLMs</h3>
+          <div class="tier-subtitle">Small Language Models • Client-Side</div>
+          <p class="tier-text">
+            Run quantized open-source models natively inside Google Chrome via WebGPU. Download model weights directly to your browser cache for deep semantic parsing and intelligent reasoning.
+          </p>
+          <div class="tier-specs">
+            <div class="tier-spec-item"><span>Supported Models:</span> <strong>Qwen 2.5 (1.5B/3B), Gemma 3, SmolLM2</strong></div>
+            <div class="tier-spec-item"><span>Quantization:</span> <strong>q4f16_1 / q4f32_1</strong></div>
+            <div class="tier-spec-item"><span>Recommended VRAM:</span> <strong>2 GB – 4 GB</strong></div>
+            <div class="tier-spec-item"><span>Data Privacy:</span> <strong>Zero Data Transfer Guarantee</strong></div>
+          </div>
+        </div>
+
+        <!-- Tier 3: Custom SLM & BYOK -->
+        <div class="tier-card">
+          <span class="tier-pill pill-tier3">Power Users • Local Ollama & BYOK</span>
+          <h3 class="tier-title">Custom SLM & BYOK</h3>
+          <div class="tier-subtitle">Ollama Localhost or Direct API Keys</div>
+          <p class="tier-text">
+            Connect directly to external native runtimes like Ollama (<code>http://localhost:11434</code>) for desktop models, or Bring-Your-Own-Key (BYOK) for OpenAI/Anthropic with zero intermediary proxy servers.
+          </p>
+          <div class="tier-specs">
+            <div class="tier-spec-item"><span>Local Runtime:</span> <strong>Ollama / llama.cpp daemon</strong></div>
+            <div class="tier-spec-item"><span>Cloud BYOK:</span> <strong>Direct Browser API Fetch</strong></div>
+            <div class="tier-spec-item"><span>Key Encryption:</span> <strong>AES-256-GCM encrypted in browser</strong></div>
+            <div class="tier-spec-item"><span>Proxy Servers:</span> <strong>Zero (Direct connection only)</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- High-Resolution Promo Banner (Light Themed) -->
+      <div class="promo-banner">
+        <img src="images/promo-large-920x680.png" alt="JACX Light Theme Architecture Showcase" style="max-height: 520px; object-fit: contain; margin: 0 auto;" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Easy Start with Onboarding Wizard -->
+  <section id="wizard" class="section wizard-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">2-Minute Setup</span>
+        <h2 class="section-title">Easy Start with the Guided Onboarding Wizard</h2>
+        <p class="section-desc">
+          Getting started with JACX takes less than two minutes. Import your existing resume or walk through our step-by-step interview setup.
+        </p>
+      </div>
+
+      <div class="wizard-grid">
+        <!-- Step 1 -->
+        <div class="wizard-card">
+          <div class="wizard-step-num">1</div>
+          <h3 class="wizard-step-title">1-Click Resume Extraction</h3>
+          <p class="wizard-step-text">
+            Drag and drop your current PDF or DOCX resume. JACX's on-device parser extracts your contact info, work history, and education into canonical format in under 5 seconds.
+          </p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="wizard-card">
+          <div class="wizard-step-num">2</div>
+          <h3 class="wizard-step-title">Links & Contact Presets</h3>
+          <p class="wizard-step-text">
+            Instantly set your LinkedIn, GitHub, portfolio URL, phone, and location with one-click quick presets. All data remains saved locally in your browser.
+          </p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="wizard-card">
+          <div class="wizard-step-num">3</div>
+          <h3 class="wizard-step-title">Target Roles & Preferences</h3>
+          <p class="wizard-step-text">
+            Configure target job titles, work authorization answers, remote/hybrid preferences, and baseline compensation requirements.
+          </p>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="wizard-card">
+          <div class="wizard-step-num">4</div>
+          <h3 class="wizard-step-title">Optional Private Vault</h3>
+          <p class="wizard-step-text">
+            Set a master password to encrypt sensitive disclosures (EEO demographics, confidential salary thresholds) with authenticated AES-256-GCM.
+          </p>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 36px;">
+        <p style="font-size: 15px; font-weight: 600; color: var(--slate-700); margin-bottom: 14px;">
+          Ready to apply? Just navigate to any job portal and press <kbd style="background: #ffffff; border: 1px solid var(--slate-300); border-radius: 6px; padding: 3px 8px; font-family: monospace; font-size: 13px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">Ctrl+Shift+F</kbd> (or <kbd style="background: #ffffff; border: 1px solid var(--slate-300); border-radius: 6px; padding: 3px 8px; font-family: monospace; font-size: 13px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">⌘+Shift+F</kbd> on Mac).
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Applicant Profile Protocol (APP v1.0.4) Standard Section -->
   <section id="protocol" class="section" style="background: linear-gradient(180deg, var(--slate-50) 0%, #ffffff 100%); border-top: 1px solid var(--slate-200); border-bottom: 1px solid var(--slate-200);">
     <div class="container">
       <div class="section-header">
         <span class="section-tag">Open Data Standard</span>
-        <h2 class="section-title">Built on Applicant Profile Protocol (APP v1.0)</h2>
+        <h2 class="section-title">Built on Applicant Profile Protocol (APP v1.0.4)</h2>
         <p class="section-desc">
-          Career sovereignty begins with open data. JACX is designed around the open-source <strong>Applicant Profile Protocol (APP)</strong>, freeing candidates from proprietary ATS walled gardens.
+          Career sovereignty begins with open data standards. JACX natively implements the open-source <strong>Applicant Profile Protocol (APP v1.0.4)</strong>, freeing candidates from proprietary ATS walled gardens.
         </p>
       </div>
 
@@ -778,7 +1386,7 @@
               <div style="width: 32px; height: 32px; border-radius: 8px; background: var(--primary-bg); border: 1px solid var(--primary-border); color: var(--primary); display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">2</div>
               <div>
                 <strong style="color: var(--slate-900); font-size: 15px;">Zero Lock-In Profile Portability</strong>
-                <p style="font-size: 13.5px; color: var(--slate-600); margin-top: 4px; line-height: 1.5;">Export standard-compliant APP JSON documents anytime. Fully validated against official schemas on <a href="https://app-protocol.org/" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: underline; font-weight: 600;">app-protocol.org</a> for total platform independence.</p>
+                <p style="font-size: 13.5px; color: var(--slate-600); margin-top: 4px; line-height: 1.5;">Export standard-compliant APP v1.0.4 JSON documents anytime. Fully validated against official schemas on <a href="https://app-protocol.org/" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: underline; font-weight: 600;">app-protocol.org</a> for total platform independence.</p>
               </div>
             </div>
 
@@ -799,14 +1407,14 @@
               <span style="width: 10px; height: 10px; border-radius: 50%; background: #f59e0b;"></span>
               <span style="width: 10px; height: 10px; border-radius: 50%; background: #10b981;"></span>
             </div>
-            <span style="color: #94a3b8; font-size: 11px;">canonical-app-1.0.json</span>
+            <span style="color: #94a3b8; font-size: 11px;">canonical-app-1.0.4.json</span>
           </div>
           <pre style="margin: 0; overflow-x: auto; color: #cbd5e1;"><code>{
   <span style="color: #38bdf8;">"protocol"</span>: {
     <span style="color: #38bdf8;">"name"</span>: <span style="color: #34d399;">"ApplicantProfileProtocol"</span>,
     <span style="color: #38bdf8;">"shortName"</span>: <span style="color: #34d399;">"APP"</span>,
     <span style="color: #38bdf8;">"version"</span>: <span style="color: #34d399;">"1.0.4"</span>,
-    <span style="color: #38bdf8;">"uri"</span>: <span style="color: #34d399;">"https://app-protocol.org/schema/app-1.0.json"</span>
+    <span style="color: #38bdf8;">"uri"</span>: <span style="color: #34d399;">"https://app-protocol.org/schema/app-1.0.4.json"</span>
   },
   <span style="color: #38bdf8;">"fieldProvenance"</span>: {
     <span style="color: #38bdf8;">"fieldPath"</span>: <span style="color: #34d399;">"experience[0].metrics"</span>,
@@ -828,7 +1436,7 @@
         <span class="section-tag">Privacy Architecture</span>
         <h2 class="section-title">How JACX Protects You vs Cloud Autofill Bots</h2>
         <p class="section-desc">
-          Conventional job autofill tools send your resumes and salary expectations to their servers. JACX operates exclusively within your local browser.
+          Conventional job autofill tools send your resumes and salary expectations to their central cloud servers. JACX operates exclusively within your local browser sandbox.
         </p>
       </div>
 
@@ -838,7 +1446,7 @@
             <tr>
               <th>Security & Privacy Property</th>
               <th>Cloud Autofill Extensions</th>
-              <th class="highlight-col">JACX (Local-First)</th>
+              <th class="highlight-col">JACX (100% Local-First)</th>
             </tr>
           </thead>
           <tbody>
@@ -849,7 +1457,7 @@
             </tr>
             <tr>
               <td><strong>Who controls the encryption keys?</strong></td>
-              <td>Vendor manages keys on server</td>
+              <td>Vendor manages keys on remote servers</td>
               <td class="highlight-col">You manage keys (AES-256-GCM + PBKDF2)</td>
             </tr>
             <tr>
@@ -860,7 +1468,7 @@
             <tr>
               <td><strong>Does it auto-submit applications?</strong></td>
               <td>Yes, high risk of errors without review</td>
-              <td class="highlight-col">Never — Human-in-the-loop guarantee</td>
+              <td class="highlight-col">Never — Strict Human-in-the-Loop guarantee</td>
             </tr>
             <tr>
               <td><strong>Telemetry & usage analytics?</strong></td>
@@ -870,7 +1478,7 @@
             <tr>
               <td><strong>Profile standard & data portability?</strong></td>
               <td>Proprietary closed database; locked behind cloud paywalls</td>
-              <td class="highlight-col">Open <strong>Applicant Profile Protocol (APP)</strong> + Encrypted <code>.appvault</code> archive</td>
+              <td class="highlight-col">Open <strong>Applicant Profile Protocol (APP v1.0.4)</strong> + Encrypted <code>.appvault</code> archive</td>
             </tr>
           </tbody>
         </table>
@@ -878,44 +1486,12 @@
     </div>
   </section>
 
-  <!-- How It Works Section -->
-  <section id="how-it-works" class="section">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Simple & Transparent</span>
-        <h2 class="section-title">Three Steps to Effortless Applications</h2>
-        <p class="section-desc">
-          Seamless side-by-side workflow in Google Chrome.
-        </p>
-      </div>
-
-      <div class="steps-grid">
-        <div class="step-card">
-          <div class="step-number">1</div>
-          <h3 class="step-title">Build Your Local Profile & Vault</h3>
-          <p class="step-desc">
-            Enter your work history, education, and target preferences. Add confidential disclosures (salary, EEO) into your password-protected AES-256 vault.
-          </p>
-        </div>
-
-        <div class="step-card">
-          <div class="step-number">2</div>
-          <h3 class="step-title">Open Any Job Application</h3>
-          <p class="step-desc">
-            Navigate to Greenhouse, Lever, Workday, or any career page. JACX automatically detects the form and displays planned fields in your Chrome sidepanel.
-          </p>
-        </div>
-
-        <div class="step-card">
-          <div class="step-number">3</div>
-          <h3 class="step-title">Verify & Fill with One Click</h3>
-          <p class="step-desc">
-            Click "Fill Verified Fields (Ctrl+Shift+F)". Review the filled fields on-page with full confidence, and submit when you are 100% satisfied.
-          </p>
-        </div>
-      </div>
+  <!-- Full Width Marquee Banner -->
+  <div class="container" style="padding-top: 30px;">
+    <div class="promo-banner" style="border: none; box-shadow: 0 15px 40px rgba(0,0,0,0.06);">
+      <img src="images/promo-marquee-1400x560.png" alt="JACX Autonomous Job Application Control eXtension" />
     </div>
-  </section>
+  </div>
 
   <!-- FAQ Section -->
   <section id="faq" class="section" style="background: #ffffff; border-top: 1px solid var(--slate-200);">
@@ -932,17 +1508,55 @@
             <span class="faq-icon">+</span>
           </button>
           <div class="faq-answer">
-            JACX does not operate any central servers, user accounts, or telemetry databases. All profiles, resumes, application records, and answers are stored exclusively in your browser's private sandbox (<code>IndexedDB</code> and <code>chrome.storage.local</code>). Zero bytes of user data are transmitted to external servers.
+            JACX does not operate any central servers, remote accounts, or telemetry databases. All profiles, resumes, application records, and answers are stored exclusively in your browser's private sandbox (<code>IndexedDB</code> and <code>chrome.storage.local</code>). Zero bytes of user data are transmitted to external servers.
           </div>
         </div>
 
         <div class="faq-item">
           <button class="faq-question">
-            <span>What is the Applicant Profile Protocol (APP) used by JACX?</span>
+            <span>What are Smart Application Safeguards?</span>
             <span class="faq-icon">+</span>
           </button>
           <div class="faq-answer">
-            The <strong>Applicant Profile Protocol (APP v1.0)</strong> is an open-source, canonical candidate profile schema and data portability standard (<a href="https://app-protocol.org" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: underline;">app-protocol.org</a>). Instead of locking your career credentials inside proprietary databases, JACX structures your work experience, education, skills, and portfolio into an open, validated specification. It includes granular <strong>Field Provenance</strong> tracking—verifying whether each data point was extracted via heuristics, verified by you, or learned locally—giving you full auditability and vendor-free data sovereignty.
+            Smart Application Safeguards are five autonomous candidate-defense policies built into JACX's on-device search engine:
+            <ul style="margin: 8px 0 8px 20px; line-height: 1.6;">
+              <li><strong>Role-Level Calibrator:</strong> Suppresses executive framing for IC roles to prevent overqualification disqualification.</li>
+              <li><strong>Focused Skill Pruning:</strong> Prunes candidate skills to match core JD competencies for specialist focus.</li>
+              <li><strong>Culture & Tone Alignment:</strong> Adapts response tone between early-stage startup velocity and enterprise governance.</li>
+              <li><strong>Salary Band Guard:</strong> Anchors proposed compensation to employer published ranges.</li>
+              <li><strong>Evidence Grounding:</strong> Prohibits unverified buzzwords by requiring citations to local candidate facts.</li>
+            </ul>
+            You can customize or toggle all safeguards from Settings.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Do I need a GPU or to download heavy models to use JACX?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            Not at all. JACX operates out of the box on <strong>Tier 1: Fast Heuristic Parser</strong>, which requires <strong>0 MB download</strong> and 0 GPU overhead. If you desire advanced deep reasoning, you can optionally enable <strong>Tier 2 (In-Browser WebGPU SLMs)</strong> or connect your own local <strong>Tier 3 (Ollama / BYOK)</strong> runtime.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>How does the AI Cover Letter generator work?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            When viewing any tracked application, click "Generate Cover Letter". JACX extracts company name and job requirements, queries your local profile evidence with active safeguards, and crafts a grounded, tailored cover letter. You can preview, edit, and export it instantly as a professionally formatted PDF with one click.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>What is the Applicant Profile Protocol (APP v1.0.4)?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            The <strong>Applicant Profile Protocol (APP v1.0.4)</strong> is an open-source, canonical candidate profile schema and data portability standard (<a href="https://app-protocol.org" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: underline;">app-protocol.org</a>). Instead of locking your career credentials inside proprietary databases, JACX structures your work experience, education, skills, and portfolio into an open, validated specification. It includes granular <strong>Field Provenance</strong> tracking—verifying whether each data point was extracted via heuristics, verified by you, or learned locally—giving you full auditability and vendor-free data sovereignty.
           </div>
         </div>
 
@@ -953,16 +1567,6 @@
           </button>
           <div class="faq-answer">
             Never. JACX is engineered with a strict <strong>Human-in-the-Loop Guarantee</strong>. JACX only plans and fills fields on the live page so you can personally inspect every answer. You always click the final Submit button yourself.
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question">
-            <span>How does the Adaptive Question Learning feature work?</span>
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-answer">
-            When you complete custom or unique questions on an ATS (such as "Are you open to hybrid work?" or "Years of Kubernetes?"), JACX saves your verified answer into the Question Library. When you encounter similar questions on future applications, JACX matches them using fuzzy semantic similarity and suggests your answer automatically.
           </div>
         </div>
 
@@ -982,7 +1586,7 @@
             <span class="faq-icon">+</span>
           </button>
           <div class="faq-answer">
-            Yes. In the Settings tab, you can export your entire database into an encrypted <code>.appvault</code> backup archive (protected by AES-256-GCM + PBKDF2) to securely transfer to another device or keep offline. You can also export your candidate profile as an open <strong>Applicant Profile Protocol (APP)</strong> JSON document. Furthermore, you can perform a complete one-click database wipe at any time. Uninstalling the extension permanently clears all data from your browser sandbox.
+            Yes. In the Settings tab, you can export your entire database into an encrypted <code>.appvault</code> backup archive (protected by AES-256-GCM + PBKDF2) to securely transfer to another device or keep offline. You can also export your candidate profile as an open <strong>Applicant Profile Protocol (APP v1.0.4)</strong> JSON document. Furthermore, you can perform a complete one-click database wipe at any time.
           </div>
         </div>
       </div>
@@ -1012,7 +1616,7 @@
             <strong style="color: var(--slate-900); font-size: 16px;">JACX</strong>
           </div>
           <p style="line-height: 1.6; max-width: 380px;">
-            Job Application Control eXtension — The privacy-preserving, local-first browser extension for high-precision job application autofill, adaptive question learning, and pipeline tracking.
+            Job Application Control eXtension — The privacy-preserving, local-first browser extension for high-precision job application autofill, adaptive question learning, smart application safeguards, and pipeline tracking.
           </p>
           <div style="margin-top: 14px; font-size: 13px; color: var(--slate-600);">
             Created by <strong style="color: var(--slate-900);">Caglar Orhan</strong>
@@ -1030,9 +1634,11 @@
           <h4>Navigation</h4>
           <ul class="footer-links">
             <li><a href="#features">Features</a></li>
-            <li><a href="#protocol">APP Protocol</a></li>
+            <li><a href="#safeguards">Smart Safeguards</a></li>
+            <li><a href="#local-ai">Local AI Architecture</a></li>
+            <li><a href="#wizard">Easy Start Wizard</a></li>
+            <li><a href="#protocol">APP v1.0.4 Protocol</a></li>
             <li><a href="#security">Privacy Architecture</a></li>
-            <li><a href="#how-it-works">How It Works</a></li>
             <li><a href="#faq">FAQ</a></li>
           </ul>
         </div>
@@ -1061,6 +1667,28 @@
       button.addEventListener('click', () => {
         const item = button.parentElement;
         item.classList.toggle('open');
+      });
+    });
+
+    // Interactive Screenshot Showcase Switcher
+    const tabs = document.querySelectorAll('.showcase-tab');
+    const screenImg = document.getElementById('showcase-img');
+    const screenCaption = document.getElementById('showcase-caption');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        const newImgSrc = tab.getAttribute('data-img');
+        const newCaption = tab.getAttribute('data-caption');
+
+        screenImg.style.opacity = '0.4';
+        setTimeout(() => {
+          screenImg.src = newImgSrc;
+          screenCaption.innerHTML = newCaption;
+          screenImg.style.opacity = '1';
+        }, 120);
       });
     });
   </script>
