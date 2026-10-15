@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy - JACX (Job Application Control eXtension)</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/icon32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="icons/icon16.png">
+  <style>
+    :root {
+      --primary: #059669;
+      --primary-dark: #047857;
+      --slate-50: #f8fafc;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-700: #334155;
+      --slate-800: #1e293b;
+      --slate-900: #0f172a;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.65;
+      color: var(--slate-800);
+      background-color: var(--slate-50);
+      padding: 2rem 1rem;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 3rem 2.5rem;
+      border-radius: 1rem;
+      border: 1px solid var(--slate-200);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    }
+    header {
+      border-bottom: 2px solid var(--slate-100);
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .badge {
+      display: inline-block;
+      background: #ecfdf5;
+      color: var(--primary-dark);
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+      border: 1px solid #a7f3d0;
+    }
+    h1 {
+      font-size: 2rem;
+      color: var(--slate-900);
+      margin-bottom: 0.5rem;
+      font-weight: 800;
+    }
+    .subtitle {
+      color: var(--slate-700);
+      font-size: 0.95rem;
+    }
+    h2 {
+      font-size: 1.3rem;
+      color: var(--slate-900);
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+      font-weight: 700;
+      border-bottom: 1px solid var(--slate-100);
+      padding-bottom: 0.4rem;
+    }
+    h3 {
+      font-size: 1.05rem;
+      color: var(--slate-800);
+      margin-top: 1.25rem;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+    p {
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+    ul {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+      font-size: 0.95rem;
+    }
+    li {
+      margin-bottom: 0.4rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.25rem 0;
+      font-size: 0.9rem;
+    }
+    th, td {
+      border: 1px solid var(--slate-200);
+      padding: 0.75rem 1rem;
+      text-align: left;
+    }
+    th {
+      background-color: var(--slate-100);
+      font-weight: 700;
+      color: var(--slate-900);
+    }
+    .callout {
+      background-color: #ecfdf5;
+      border-left: 4px solid var(--primary);
+      padding: 1rem 1.25rem;
+      border-radius: 0.5rem;
+      margin: 1.5rem 0;
+      font-size: 0.95rem;
+    }
+    .callout strong {
+      color: var(--primary-dark);
+    }
+    footer {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--slate-200);
+      font-size: 0.85rem;
+      color: var(--slate-700);
+      text-align: center;
+    }
+    a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <span class="badge">Privacy First • Local Only</span>
+      <h1>Privacy Policy</h1>
+      <p class="subtitle">JACX — Job Application Control eXtension • Last Updated: October 11, 2026</p>
+    </header>
+
+    <div class="callout">
+      <strong>Core Commitment:</strong> JACX is built on a strict <strong>local-first, zero-telemetry</strong> philosophy. All your resumes, applications, private vaults, and personal disclosures are stored and processed 100% on your machine. We do not operate remote user servers, track usage analytics, or sell personal data.
+    </div>
+
+    <h2>1. Core Architecture: Local Storage Sandbox</h2>
+    <p>All data processed by JACX remains exclusively within your local browser sandbox:</p>
+    <ul>
+      <li><strong>No Central Server:</strong> We operate no databases, user accounts, or cloud storage.</li>
+      <li><strong>No Telemetry or Tracking:</strong> JACX collects zero usage statistics, analytics, or behavioral cookies.</li>
+      <li><strong>No Data Monetization:</strong> We never sell, transfer, or share your information with advertisers, third parties, or data brokers.</li>
+      <li><strong>Client-Side Encryption:</strong> Your private vault is secured with <strong>AES-256-GCM</strong> authenticated encryption directly in your browser.</li>
+    </ul>
+
+    <h2>2. What Information JACX Handles</h2>
+    <p>Information handled by JACX is stored exclusively in your browser’s local IndexedDB and <code>chrome.storage.local</code>:</p>
+    <ul>
+      <li><strong>Applicant Profiles:</strong> Contact details, education, work experience, skills, and resume documents.</li>
+      <li><strong>Private Vault:</strong> Confidential disclosures (demographics, target compensation, references), protected with client-side encryption.</li>
+      <li><strong>Job Tracker History:</strong> Tracked job URLs, role titles, application stages, and submitted question-answer pairs for revisitable records.</li>
+      <li><strong>Role Alignment Scores:</strong> Scientific fit calculations evaluated on-device to help you prioritize suitable job postings.</li>
+    </ul>
+
+    <h2>3. Chrome Extension Permissions & Technical Justifications</h2>
+    <p>JACX complies with Google’s Minimal Permissions Policy. Each permission serves an essential user-facing function:</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Permission</th>
+          <th>Purpose & Justification</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>sidePanel</code></td>
+          <td>Opens a side-by-side workspace within Chrome so you can review and control application autofill without leaving the job page.</td>
+        </tr>
+        <tr>
+          <td><code>storage</code></td>
+          <td>Persists your profiles, encrypted vaults, and application records on your computer.</td>
+        </tr>
+        <tr>
+          <td><code>activeTab</code> & <code>tabs</code></td>
+          <td>Detects navigation to job application pages and keeps tracker records synchronized.</td>
+        </tr>
+          <td><code>offscreen</code></td>
+          <td>Generates PDF cover letters and performs document processing securely within an offscreen browser document.</td>
+        </tr>
+        <tr>
+          <td><code>&lt;all_urls&gt;</code> (Host)</td>
+          <td>Job application portals span thousands of distinct domains (Greenhouse, Lever, Workday, Ashby, and company career portals). Broad host access enables form detection across any career site. The extension only executes on detected job postings.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>4. Third-Party Integrations & External AI Models</h2>
+    <p><strong>Default Offline Mode:</strong> By default, JACX functions completely offline using heuristic matching, rule-based algorithms, and local semantic parsing.</p>
+    <p><strong>Optional BYOK (Bring Your Own Key):</strong> If you choose to configure external AI model providers (such as OpenAI, Anthropic, or a local Ollama instance):</p>
+    <ul>
+      <li>API calls are sent <strong>directly from your browser</strong> to the provider.</li>
+      <li>JACX never proxies, intercepts, or logs your requests or API keys on external servers.</li>
+      <li>Your API keys are encrypted locally and never transmitted to JACX authors.</li>
+    </ul>
+
+    <h2>5. Data Control, Export & Deletion</h2>
+    <p>You retain absolute control over your career data:</p>
+    <ul>
+      <li><strong>Export:</strong> Download an encrypted <code>.appvault</code> archive of your entire workspace at any time, or export standardized candidate profiles adhering to the open <a href="https://app-protocol.org/" target="_blank" rel="noopener noreferrer" style="color: #059669; font-weight: 600;">Applicant Profile Protocol (APP v1.0)</a> standard.</li>
+      <li><strong>Deletion:</strong> Delete individual applications, profiles, or wipe the entire database directly within Settings.</li>
+      <li><strong>Uninstall:</strong> Removing the extension immediately wipes all local databases and caches managed by JACX.</li>
+    </ul>
+
+    <h2>6. Contact & Open Source Verification</h2>
+    <p>For questions or feedback regarding this privacy policy:</p>
+    <p>Repository: <a href="https://github.com/caglarorhan/jacx" target="_blank" rel="noopener noreferrer">https://github.com/caglarorhan/jacx</a><br>
+    Author GitHub: <a href="https://github.com/caglarorhan" target="_blank" rel="noopener noreferrer">https://github.com/caglarorhan</a><br>
+    Protocol Standards: <a href="https://app-protocol.org/" target="_blank" rel="noopener noreferrer">https://app-protocol.org/</a><br>
+    Support: support@jacx.dev</p>
+
+    <footer>
+      &copy; 2026 JACX (Job Application Control eXtension). All rights reserved. Built with privacy-first engineering.
+    </footer>
+  </div>
+</body>
+</html>

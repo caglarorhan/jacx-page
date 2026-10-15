@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JACX — Privacy-First Job Application Control & Autofill</title>
+  <meta name="description" content="JACX (Job Application Control eXtension) is a 100% local-first, privacy-preserving Chrome extension for smart ATS autofill, adaptive question learning, and continuous application tracking." />
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/icon32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="icons/icon16.png" />
+  <link rel="apple-touch-icon" sizes="128x128" href="icons/icon128.png" />
+
+  <style>
+    :root {
+      --primary: #059669;
+      --primary-dark: #047857;
+      --primary-light: #10b981;
+      --primary-bg: #ecfdf5;
+      --primary-border: #a7f3d0;
+      --slate-50: #f8fafc;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-300: #cbd5e1;
+      --slate-400: #94a3b8;
+      --slate-500: #64748b;
+      --slate-600: #475569;
+      --slate-700: #334155;
+      --slate-800: #1e293b;
+      --slate-900: #0f172a;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.6;
+      color: var(--slate-800);
+      background-color: var(--slate-50);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Header & Navigation */
+    header.site-header {
+      position: sticky;
+      top: 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--slate-200);
+      z-index: 50;
+    }
+    .nav-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 72px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--slate-900);
+    }
+    .brand-logo {
+      width: 38px;
+      height: 38px;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 8px rgba(5, 150, 105, 0.2));
+    }
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+    .brand-title {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+    .brand-sub {
+      font-size: 11px;
+      color: var(--slate-500);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-link {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--slate-600);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+    .nav-link:hover {
+      color: var(--primary-dark);
+    }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary);
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 10px 20px;
+      border-radius: 9999px;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25);
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+    }
+    .cta-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(5, 150, 105, 0.35);
+    }
+    .cta-btn-secondary {
+      background: #ffffff;
+      color: var(--slate-700);
+      border: 1px solid var(--slate-300);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+    .cta-btn-secondary:hover {
+      background: var(--slate-100);
+      color: var(--slate-900);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 80px 0 60px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary-bg);
+      border: 1px solid var(--primary-border);
+      color: var(--primary-dark);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 16px;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 24px;
+    }
+    .hero-title {
+      font-size: 52px;
+      font-weight: 900;
+      color: var(--slate-900);
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      max-width: 900px;
+      margin: 0 auto 20px auto;
+    }
+    .hero-title span {
+      background: linear-gradient(135deg, var(--primary) 0%, #0284c7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-desc {
+      font-size: 18px;
+      line-height: 1.6;
+      color: var(--slate-600);
+      max-width: 760px;
+      margin: 0 auto 36px auto;
+    }
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+    .hero-trust {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 24px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--slate-600);
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .trust-item span.icon {
+      color: var(--primary);
+    }
+
+    /* Hero Image Preview */
+    .hero-preview {
+      margin-top: 50px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--slate-200);
+      box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.15);
+      background: #ffffff;
+    }
+    .hero-preview img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Section Headers */
+    .section {
+      padding: 90px 0;
+    }
+    .section-header {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 54px auto;
+    }
+    .section-tag {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .section-title {
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--slate-900);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+    .section-desc {
+      font-size: 16px;
+      color: var(--slate-600);
+      line-height: 1.6;
+    }
+
+    /* Feature Grid (8 Pillars) */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .feature-card {
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      border-radius: 16px;
+      padding: 32px 28px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .feature-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+      border-color: var(--primary-border);
+    }
+    .feature-card.highlight {
+      border-color: var(--primary-border);
+      background: linear-gradient(180deg, #ffffff 0%, var(--primary-bg) 100%);
+    }
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--primary-bg);
+      border: 1px solid var(--primary-border);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    .feature-title {
+      font-size: 19px;
+      font-weight: 800;
+      color: var(--slate-900);
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+    .feature-text {
+      font-size: 14px;
+      color: var(--slate-600);
+      line-height: 1.6;
+      flex: 1;
+    }
+    .feature-bullets {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid var(--slate-100);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .feature-bullet {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--slate-700);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .bullet-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    /* Comparison Table */
+    .comparison-section {
+      background: #ffffff;
+      border-top: 1px solid var(--slate-200);
+      border-bottom: 1px solid var(--slate-200);
+    }
+    .comparison-table-wrap {
+      border-radius: 16px;
+      border: 1px solid var(--slate-200);
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+    }
+    table.comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 14px;
+    }
+    .comparison-table th, .comparison-table td {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--slate-200);
+    }
+    .comparison-table th {
+      background: var(--slate-100);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--slate-700);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .comparison-table th.highlight-col {
+      background: var(--primary-bg);
+      color: var(--primary-dark);
+      font-weight: 800;
+    }
+    .comparison-table td.highlight-col {
+      background: rgba(236, 253, 245, 0.4);
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+
+    /* Workflow Steps */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+    .step-card {
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      border-radius: 16px;
+      padding: 32px 24px;
+      position: relative;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    }
+    .step-number {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+    .step-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--slate-900);
+      margin-bottom: 10px;
+    }
+    .step-desc {
+      font-size: 14px;
+      color: var(--slate-600);
+      line-height: 1.6;
+    }
+
+    /* FAQ Accordion */
+    .faq-grid {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .faq-item {
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+    .faq-question {
+      width: 100%;
+      padding: 20px 24px;
+      background: none;
+      border: none;
+      text-align: left;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--slate-900);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+    .faq-question:hover {
+      color: var(--primary-dark);
+    }
+    .faq-icon {
+      font-size: 18px;
+      transition: transform 0.2s ease;
+      color: var(--slate-400);
+    }
+    .faq-answer {
+      display: none;
+      padding: 0 24px 20px 24px;
+      font-size: 14px;
+      color: var(--slate-600);
+      line-height: 1.6;
+    }
+    .faq-item.open .faq-answer {
+      display: block;
+    }
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg);
+      color: var(--primary);
+    }
+
+    /* CTA Section */
+    .cta-section {
+      background: linear-gradient(135deg, var(--slate-900) 0%, #1e293b 100%);
+      color: #ffffff;
+      padding: 80px 0;
+      text-align: center;
+      border-radius: 24px;
+      margin: 60px auto;
+      max-width: 1140px;
+      box-shadow: 0 20px 50px -10px rgba(15, 23, 42, 0.4);
+    }
+    .cta-title {
+      font-size: 40px;
+      font-weight: 900;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+    .cta-desc {
+      font-size: 17px;
+      color: var(--slate-300);
+      max-width: 640px;
+      margin: 0 auto 32px auto;
+      line-height: 1.6;
+    }
+
+    /* Footer */
+    footer.site-footer {
+      background: #ffffff;
+      border-top: 1px solid var(--slate-200);
+      padding: 60px 0 40px 0;
+      font-size: 13.5px;
+      color: var(--slate-500);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+    .footer-col h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--slate-900);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 16px;
+    }
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-links a {
+      color: var(--slate-600);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+    .footer-bottom {
+      border-top: 1px solid var(--slate-200);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12.5px;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero-title { font-size: 38px; }
+      .features-grid, .steps-grid, .protocol-grid { grid-template-columns: 1fr !important; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="#" class="brand">
+        <img src="icons/icon32.png" alt="JACX Logo" class="brand-logo" />
+        <div class="brand-text">
+          <span class="brand-title">JACX</span>
+          <span class="brand-sub">Job Application Control eXtension</span>
+        </div>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#features" class="nav-link">Features</a></li>
+        <li><a href="#protocol" class="nav-link">APP Protocol</a></li>
+        <li><a href="#security" class="nav-link">Privacy & Security</a></li>
+        <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
+        <li><a href="#faq" class="nav-link">FAQ</a></li>
+        <li><a href="privacy.html" class="nav-link">Privacy Policy</a></li>
+      </ul>
+
+      <div>
+        <a href="https://chrome.google.com/webstore" target="_blank" rel="noopener noreferrer" class="cta-btn">
+          <span>Add to Chrome</span>
+          <span style="font-size: 11px; background: rgba(255,255,255,0.2); padding: 2px 7px; border-radius: 9999px;">Free</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-badge">
+        <span>🛡️ 100% Local-First • Zero Cloud Servers • Privacy Invariant</span>
+      </div>
+
+      <h1 class="hero-title">
+        Take Control of Your Career Search with <span>Zero-Telemetry Autofill.</span>
+      </h1>
+
+      <p class="hero-desc">
+        JACX is the privacy-first Chrome sidepanel assistant for verified ATS form autofill, adaptive question learning, and continuous application tracking. All resumes, credentials, and answers remain 100% on your machine.
+      </p>
+
+      <div class="hero-actions">
+        <a href="https://chrome.google.com/webstore" target="_blank" rel="noopener noreferrer" class="cta-btn" style="padding: 14px 28px; font-size: 15px;">
+          ⚡ Add to Chrome — It's Free
+        </a>
+        <a href="#features" class="cta-btn cta-btn-secondary" style="padding: 14px 24px; font-size: 15px;">
+          Explore All Features ↓
+        </a>
+      </div>
+
+      <div class="hero-trust">
+        <div class="trust-item"><span class="icon">✓</span> 100% On-Device IndexedDB</div>
+        <div class="trust-item"><span class="icon">✓</span> Military-Grade AES-256-GCM Vault</div>
+        <div class="trust-item"><span class="icon">✓</span> Human-in-the-Loop Review (Zero Auto-Submits)</div>
+        <div class="trust-item"><span class="icon">✓</span> Zero Telemetry & No Remote Accounts</div>
+      </div>
+
+      <div class="hero-preview">
+        <img src="images/screenshot-1-autofill-1280x800.png" alt="JACX Extension Live Screenshot in Chrome" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Grid Section -->
+  <section id="features" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Complete Feature Architecture</span>
+        <h2 class="section-title">Engineered for Precision, Privacy & Career Velocity</h2>
+        <p class="section-desc">
+          Everything you need to master your application lifecycle across any career site without sacrificing your personal privacy.
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <!-- Feature 1: Precision Autofill -->
+        <div class="feature-card highlight">
+          <div class="feature-icon">⚡</div>
+          <h3 class="feature-title">Precision ATS Autofill</h3>
+          <p class="feature-text">
+            Autonomous field detection across Greenhouse, Lever, Workday, Ashby, Taleo, Criteria Corp, and custom corporate career portals.
+          </p>
+          <div class="feature-bullets">
+            <div class="feature-bullet"><span class="bullet-dot"></span>Multi-frame ATS support</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>Preview planned fields before execution</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>Never auto-submits without review</div>
+          </div>
+        </div>
+
+        <!-- Feature 2: Adaptive Question Learning -->
+        <div class="feature-card highlight">
+          <div class="feature-icon">🧠</div>
+          <h3 class="feature-title">Adaptive Question Learning</h3>
+          <p class="feature-text">
+            Tired of answering "How many years of React?" on every portal? JACX automatically learns and stores your verified answers, auto-suggesting them using fuzzy semantic matching.
+          </p>
+          <div class="feature-bullets">
+            <div class="feature-bullet"><span class="bullet-dot"></span>Self-learning Question Library</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>Fuzzy similarity matching across ATSs</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>Full manual edit and review control</div>
+          </div>
+        </div>
+
+        <!-- Feature 3: 3-Tier Application Tracker -->
+        <div class="feature-card highlight">
+          <div class="feature-icon">📊</div>
+          <h3 class="feature-title">3-Tier Application Tracker</h3>
+          <p class="feature-text">
+            Automatically logs applications as you apply. View organized 3-tier cards with instant multi-criteria sorting by Application Date, Last Visit, or Role Match Fit.
+          </p>
+          <div class="feature-bullets">
+            <div class="feature-bullet"><span class="bullet-dot"></span>Pipeline stages: Applied, Interview, Offer, Rejected</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>Revisitable submitted Q&A history</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>Recruiter contact records & private notes</div>
+          </div>
+        </div>
+
+        <!-- Feature 4: Multi-Round Interviews -->
+        <div class="feature-card">
+          <div class="feature-icon">🗓️</div>
+          <h3 class="feature-title">Multi-Round Interview Manager</h3>
+          <p class="feature-text">
+            Track sequential interview rounds with dates, times, interviewers, and preparation notes. Export directly to Google Calendar, Outlook, or standard .ICS files.
+          </p>
+          <div class="feature-bullets">
+            <div class="feature-bullet"><span class="bullet-dot"></span>Google & Outlook Calendar sync</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>Standard .ICS calendar downloads</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>Next round countdown banner on cards</div>
+          </div>
+        </div>
+
+        <!-- Feature 5: Offer Details & Compensation -->
+        <div class="feature-card">
+          <div class="feature-icon">💼</div>
+          <h3 class="feature-title">Offer & Compensation Tracker</h3>
+          <p class="feature-text">
+            Organize job offers with base salary, signing bonus, equity grants, and decision deadlines. Plan negotiation strategies with structured notes.
+          </p>
+          <div class="feature-bullets">
+            <div class="feature-bullet"><span class="bullet-dot"></span>Base, bonus & equity tracking</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>Offer expiration alerts</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>Two-step safe stage downgrade guard</div>
+          </div>
+        </div>
+
+        <!-- Feature 6: 15-Day Soft-Delete & Trash -->
+        <div class="feature-card">
+          <div class="feature-icon">🗑️</div>
+          <h3 class="feature-title">15-Day Soft-Delete & Trash</h3>
+          <p class="feature-text">
+            Accidentally deleted an application? Deleted cards enter a 15-day recovery trash bin. Restore them with one click or let expired entries auto-purge permanently.
+          </p>
+          <div class="feature-bullets">
+            <div class="feature-bullet"><span class="bullet-dot"></span>Dedicated "Deleted" filter view</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>Instant one-click RESTORE button</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>Automatic purge prevents storage leaks</div>
+          </div>
+        </div>
+
+        <!-- Feature 7: AES-256-GCM Private Vault -->
+        <div class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <h3 class="feature-title">AES-256-GCM Private Vault</h3>
+          <p class="feature-text">
+            Store confidential disclosures (EEO demographics, target compensation, reference contacts) protected with authenticated encryption and PBKDF2 key derivation.
+          </p>
+          <div class="feature-bullets">
+            <div class="feature-bullet"><span class="bullet-dot"></span>100,000 PBKDF2 master key iterations</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>Decrypted in memory only when approved</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>Zero plaintext on disk</div>
+          </div>
+        </div>
+
+        <!-- Feature 8: Match Fit & Cover Letters -->
+        <div class="feature-card">
+          <div class="feature-icon">🎯</div>
+          <h3 class="feature-title">Match Fit & Cover Letters</h3>
+          <p class="feature-text">
+            Evaluates candidate-to-job keyword alignment directly on your device with clear reasoning. Generate tailored cover letters with instant client-side PDF export.
+          </p>
+          <div class="feature-bullets">
+            <div class="feature-bullet"><span class="bullet-dot"></span>Scientific match percentage scoring</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>Client-side PDF document generation</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>Multiple candidate profile personas</div>
+          </div>
+        </div>
+
+        <!-- Feature 9: Zero Telemetry Architecture -->
+        <div class="feature-card">
+          <div class="feature-icon">🛡️</div>
+          <h3 class="feature-title">Zero Telemetry & Local-First</h3>
+          <p class="feature-text">
+            No remote databases, no tracking cookies, no Google Analytics, and no account registrations. Export or delete your entire database anytime from Settings.
+          </p>
+          <div class="feature-bullets">
+            <div class="feature-bullet"><span class="bullet-dot"></span>100% on-device browser sandbox</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>Encrypted .appvault portable workspace backup</div>
+            <div class="feature-bullet"><span class="bullet-dot"></span>Open Applicant Profile Protocol (APP)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Applicant Profile Protocol (APP) Standard Section -->
+  <section id="protocol" class="section" style="background: linear-gradient(180deg, var(--slate-50) 0%, #ffffff 100%); border-top: 1px solid var(--slate-200); border-bottom: 1px solid var(--slate-200);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Open Data Standard</span>
+        <h2 class="section-title">Built on Applicant Profile Protocol (APP v1.0)</h2>
+        <p class="section-desc">
+          Career sovereignty begins with open data. JACX is designed around the open-source <strong>Applicant Profile Protocol (APP)</strong>, freeing candidates from proprietary ATS walled gardens.
+        </p>
+      </div>
+
+      <div class="protocol-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: center;">
+        <div>
+          <h3 style="font-size: 22px; font-weight: 800; color: var(--slate-900); margin-bottom: 16px;">
+            True Career Interoperability & Cryptographic Field Provenance
+          </h3>
+          <p style="font-size: 14.5px; color: var(--slate-600); line-height: 1.7; margin-bottom: 24px;">
+            Unlike commercial autofill tools that lock your career history into closed proprietary databases, JACX natively implements the open <code>ApplicantProfileProtocol</code> (APP v1.0.4) specification. Your resumes, employment timelines, and skill matrices are structured in an open JSON format you can export and own forever.
+          </p>
+
+          <div style="display: flex; flex-direction: column; gap: 18px;">
+            <div style="display: flex; gap: 14px; align-items: flex-start;">
+              <div style="width: 32px; height: 32px; border-radius: 8px; background: var(--primary-bg); border: 1px solid var(--primary-border); color: var(--primary); display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">1</div>
+              <div>
+                <strong style="color: var(--slate-900); font-size: 15px;">Granular Field Provenance (FieldProvenance)</strong>
+                <p style="font-size: 13.5px; color: var(--slate-600); margin-top: 4px; line-height: 1.5;">Every single claim, metric, and bullet point tracks exact origin attribution—whether parsed via PDF heuristic, verified by you, or learned locally.</p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 14px; align-items: flex-start;">
+              <div style="width: 32px; height: 32px; border-radius: 8px; background: var(--primary-bg); border: 1px solid var(--primary-border); color: var(--primary); display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">2</div>
+              <div>
+                <strong style="color: var(--slate-900); font-size: 15px;">Zero Lock-In Profile Portability</strong>
+                <p style="font-size: 13.5px; color: var(--slate-600); margin-top: 4px; line-height: 1.5;">Export standard-compliant APP JSON documents anytime. Fully validated against official schemas on <a href="https://app-protocol.org/" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: underline; font-weight: 600;">app-protocol.org</a> for total platform independence.</p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 14px; align-items: flex-start;">
+              <div style="width: 32px; height: 32px; border-radius: 8px; background: var(--primary-bg); border: 1px solid var(--primary-border); color: var(--primary); display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">3</div>
+              <div>
+                <strong style="color: var(--slate-900); font-size: 15px;">AES-256-GCM Encrypted Workspace Vault (.appvault)</strong>
+                <p style="font-size: 13.5px; color: var(--slate-600); margin-top: 4px; line-height: 1.5;">Export your complete workspace—including profiles, learned answers, tracker history, and job notes—into a password-encrypted <code>.appvault</code> archive to transfer across machines.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background: var(--slate-900); border-radius: 16px; padding: 24px; color: #e2e8f0; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 12.5px; line-height: 1.6; box-shadow: 0 10px 30px rgba(15,23,42,0.15); border: 1px solid var(--slate-800);">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--slate-800); padding-bottom: 12px; margin-bottom: 16px;">
+            <div style="display: flex; gap: 6px;">
+              <span style="width: 10px; height: 10px; border-radius: 50%; background: #ef4444;"></span>
+              <span style="width: 10px; height: 10px; border-radius: 50%; background: #f59e0b;"></span>
+              <span style="width: 10px; height: 10px; border-radius: 50%; background: #10b981;"></span>
+            </div>
+            <span style="color: #94a3b8; font-size: 11px;">canonical-app-1.0.json</span>
+          </div>
+          <pre style="margin: 0; overflow-x: auto; color: #cbd5e1;"><code>{
+  <span style="color: #38bdf8;">"protocol"</span>: {
+    <span style="color: #38bdf8;">"name"</span>: <span style="color: #34d399;">"ApplicantProfileProtocol"</span>,
+    <span style="color: #38bdf8;">"shortName"</span>: <span style="color: #34d399;">"APP"</span>,
+    <span style="color: #38bdf8;">"version"</span>: <span style="color: #34d399;">"1.0.4"</span>,
+    <span style="color: #38bdf8;">"uri"</span>: <span style="color: #34d399;">"https://app-protocol.org/schema/app-1.0.json"</span>
+  },
+  <span style="color: #38bdf8;">"fieldProvenance"</span>: {
+    <span style="color: #38bdf8;">"fieldPath"</span>: <span style="color: #34d399;">"experience[0].metrics"</span>,
+    <span style="color: #38bdf8;">"method"</span>: <span style="color: #34d399;">"pdf-text-heuristic"</span>,
+    <span style="color: #38bdf8;">"confidence"</span>: <span style="color: #f59e0b;">0.98</span>,
+    <span style="color: #38bdf8;">"verifiedByUser"</span>: <span style="color: #10b981;">true</span>
+  },
+  <span style="color: #38bdf8;">"exportFormat"</span>: <span style="color: #34d399;">"jacx_workspace_2026.appvault"</span>
+}</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Security & Privacy Comparison -->
+  <section id="security" class="section comparison-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Privacy Architecture</span>
+        <h2 class="section-title">How JACX Protects You vs Cloud Autofill Bots</h2>
+        <p class="section-desc">
+          Conventional job autofill tools send your resumes and salary expectations to their servers. JACX operates exclusively within your local browser.
+        </p>
+      </div>
+
+      <div class="comparison-table-wrap">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Security & Privacy Property</th>
+              <th>Cloud Autofill Extensions</th>
+              <th class="highlight-col">JACX (Local-First)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Where is your resume stored?</strong></td>
+              <td>Remote cloud databases & central servers</td>
+              <td class="highlight-col">100% on your local machine (IndexedDB)</td>
+            </tr>
+            <tr>
+              <td><strong>Who controls the encryption keys?</strong></td>
+              <td>Vendor manages keys on server</td>
+              <td class="highlight-col">You manage keys (AES-256-GCM + PBKDF2)</td>
+            </tr>
+            <tr>
+              <td><strong>Can the vendor sell your career data?</strong></td>
+              <td>Often permitted in privacy terms & conditions</td>
+              <td class="highlight-col">Impossible — Zero data exfiltration</td>
+            </tr>
+            <tr>
+              <td><strong>Does it auto-submit applications?</strong></td>
+              <td>Yes, high risk of errors without review</td>
+              <td class="highlight-col">Never — Human-in-the-loop guarantee</td>
+            </tr>
+            <tr>
+              <td><strong>Telemetry & usage analytics?</strong></td>
+              <td>Tracks every website visited and time spent</td>
+              <td class="highlight-col">Zero analytics, zero cookies, zero trackers</td>
+            </tr>
+            <tr>
+              <td><strong>Profile standard & data portability?</strong></td>
+              <td>Proprietary closed database; locked behind cloud paywalls</td>
+              <td class="highlight-col">Open <strong>Applicant Profile Protocol (APP)</strong> + Encrypted <code>.appvault</code> archive</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section id="how-it-works" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Simple & Transparent</span>
+        <h2 class="section-title">Three Steps to Effortless Applications</h2>
+        <p class="section-desc">
+          Seamless side-by-side workflow in Google Chrome.
+        </p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h3 class="step-title">Build Your Local Profile & Vault</h3>
+          <p class="step-desc">
+            Enter your work history, education, and target preferences. Add confidential disclosures (salary, EEO) into your password-protected AES-256 vault.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h3 class="step-title">Open Any Job Application</h3>
+          <p class="step-desc">
+            Navigate to Greenhouse, Lever, Workday, or any career page. JACX automatically detects the form and displays planned fields in your Chrome sidepanel.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h3 class="step-title">Verify & Fill with One Click</h3>
+          <p class="step-desc">
+            Click "Fill Verified Fields (Ctrl+Shift+F)". Review the filled fields on-page with full confidence, and submit when you are 100% satisfied.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="section" style="background: #ffffff; border-top: 1px solid var(--slate-200);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Frequently Asked Questions</span>
+        <h2 class="section-title">Common Inquiries</h2>
+      </div>
+
+      <div class="faq-grid">
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Is JACX really 100% local? Where does my data go?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            JACX does not operate any central servers, user accounts, or telemetry databases. All profiles, resumes, application records, and answers are stored exclusively in your browser's private sandbox (<code>IndexedDB</code> and <code>chrome.storage.local</code>). Zero bytes of user data are transmitted to external servers.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>What is the Applicant Profile Protocol (APP) used by JACX?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            The <strong>Applicant Profile Protocol (APP v1.0)</strong> is an open-source, canonical candidate profile schema and data portability standard (<a href="https://app-protocol.org" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: underline;">app-protocol.org</a>). Instead of locking your career credentials inside proprietary databases, JACX structures your work experience, education, skills, and portfolio into an open, validated specification. It includes granular <strong>Field Provenance</strong> tracking—verifying whether each data point was extracted via heuristics, verified by you, or learned locally—giving you full auditability and vendor-free data sovereignty.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Will JACX submit job applications without my review?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            Never. JACX is engineered with a strict <strong>Human-in-the-Loop Guarantee</strong>. JACX only plans and fills fields on the live page so you can personally inspect every answer. You always click the final Submit button yourself.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>How does the Adaptive Question Learning feature work?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            When you complete custom or unique questions on an ATS (such as "Are you open to hybrid work?" or "Years of Kubernetes?"), JACX saves your verified answer into the Question Library. When you encounter similar questions on future applications, JACX matches them using fuzzy semantic similarity and suggests your answer automatically.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Which Applicant Tracking Systems (ATS) are supported?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            JACX provides optimized field heuristics for Greenhouse, Lever, Workday, Ashby, Taleo, Criteria Corp, SmartRecruiters, and Workable, as well as heuristic semantic detection across custom corporate career portals.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Can I export or delete my applications and profiles? What is the backup format?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            Yes. In the Settings tab, you can export your entire database into an encrypted <code>.appvault</code> backup archive (protected by AES-256-GCM + PBKDF2) to securely transfer to another device or keep offline. You can also export your candidate profile as an open <strong>Applicant Profile Protocol (APP)</strong> JSON document. Furthermore, you can perform a complete one-click database wipe at any time. Uninstalling the extension permanently clears all data from your browser sandbox.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Box -->
+  <div class="container">
+    <div class="cta-section">
+      <h2 class="cta-title">Ready to Streamline Your Job Search?</h2>
+      <p class="cta-desc">
+        Install JACX in seconds and experience privacy-first, verified job application autofill and organization today.
+      </p>
+      <a href="https://chrome.google.com/webstore" target="_blank" rel="noopener noreferrer" class="cta-btn" style="padding: 16px 36px; font-size: 16px; background: #10b981;">
+        ⚡ Install on Chrome Web Store — It's Free
+      </a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+            <img src="icons/icon32.png" alt="JACX" style="width: 24px; height: 24px;" />
+            <strong style="color: var(--slate-900); font-size: 16px;">JACX</strong>
+          </div>
+          <p style="line-height: 1.6; max-width: 380px;">
+            Job Application Control eXtension — The privacy-preserving, local-first browser extension for high-precision job application autofill, adaptive question learning, and pipeline tracking.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#protocol">APP Protocol</a></li>
+            <li><a href="#security">Privacy Architecture</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#faq">FAQ</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Open Source & Protocol</h4>
+          <ul class="footer-links">
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="https://github.com/caglarorhan/jacx" target="_blank" rel="noopener noreferrer">GitHub Repository</a></li>
+            <li><a href="https://github.com/caglarorhan" target="_blank" rel="noopener noreferrer">Author Profile (@caglarorhan)</a></li>
+            <li><a href="https://app-protocol.org/" target="_blank" rel="noopener noreferrer">APP Protocol Official Site</a></li>
+            <li><a href="https://chrome.google.com/webstore" target="_blank" rel="noopener noreferrer">Chrome Web Store</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 JACX (Job Application Control eXtension). All rights reserved.</div>
+        <div>Built with privacy-first engineering • Zero cloud telemetry.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // FAQ Accordion Toggle
+    document.querySelectorAll('.faq-question').forEach(button => {
+      button.addEventListener('click', () => {
+        const item = button.parentElement;
+        item.classList.toggle('open');
+      });
+    });
+  </script>
+</body>
+</html>
